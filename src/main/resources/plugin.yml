@@ -1,0 +1,12 @@
+name: WarCorpses
+version: '${version}'
+main: org.waraccademy.warcorpses.WarCorpses
+api-version: 1.16
+authors: [ WarAccademy ]
+description: Corpi
+depend:
+  - Citizens
+  - SmartInvs
+commands:
+  corpselog:
+  removecorpse:

@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.waraccademy'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+
+    maven {
+        name = 'citizens-repo'
+        url = 'https://maven.citizensnpcs.co/repo'
+    }
+
+    maven {
+        name = 'AlessioDP'
+        url = 'https://repo.alessiodp.com/releases/'
+    }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot:1.16.5-R0.1-SNAPSHOT'
+    compileOnly 'net.citizensnpcs:citizens-main:2.0.30-SNAPSHOT'
+    compileOnly 'fr.minuskube.inv:smart-invs:1.2.7'
+    compileOnly 'org.waraccademy:MongoConnector:1.0.0-SNAPSHOT'
+
+    compileOnly 'org.jetbrains:annotations:16.0.2'
+}
+
+def targetJavaVersion = 8
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}
