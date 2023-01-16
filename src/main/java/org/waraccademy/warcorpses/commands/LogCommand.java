@@ -16,21 +16,16 @@ public class LogCommand implements CommandExecutor {
     private final YamlConfiguration config = WarCorpses.getInstance().getConfig();
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        System.out.println("Comando eseguito");
         if(strings.length != 1)
             return true;
-        System.out.println("Comando eseguito 2");
 
         if(!(sender instanceof Player))
             return true;
 
-        System.out.println("Comando eseguito 3");
         Player p = (Player) sender;
 
         if(!p.hasPermission("warcorpses.log"))
             return true;
-
-        System.out.println("Comando eseguito 4");
 
         String target = strings[0];
 
@@ -40,14 +35,12 @@ public class LogCommand implements CommandExecutor {
 
                 return;
             }
-            System.out.println("Comando eseguito 5");
 
-            if(result.isEmpty()){
+            if(result == null){
                 p.sendMessage(color(config.getString("messages.no-logs")));
                 return;
             }
 
-            System.out.println("Comando eseguito 6");
             Bukkit.getScheduler().runTask(WarCorpses.getInstance(),() -> CorpseLogProvider.getInventory(result).open(p));
         });
 

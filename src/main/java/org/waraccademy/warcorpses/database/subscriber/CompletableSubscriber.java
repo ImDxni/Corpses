@@ -2,6 +2,7 @@ package org.waraccademy.warcorpses.database.subscriber;
 
 import org.waraccademy.mongo.database.subscribers.OperationSubscriber;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
